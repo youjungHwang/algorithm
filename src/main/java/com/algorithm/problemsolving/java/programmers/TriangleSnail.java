@@ -7,7 +7,6 @@ package com.algorithm.problemsolving.java.programmers;
  * 문제: https://school.programmers.co.kr/learn/courses/30/lessons/68645
  * 해설: https://lealea.tistory.com/308
  */
-
 public class TriangleSnail {
     public int[] solution(int n) {
         int x = -1;

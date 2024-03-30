@@ -6,7 +6,8 @@ import java.util.*;
  * 코딩테스트 연습 > 2022 KAKAO TECH INTERNSHIP
  * 두 큐 합 같게 만들기
  *
- * https://lealea.tistory.com/293
+ * 문제: https://school.programmers.co.kr/learn/courses/30/lessons/118667
+ * 해설: https://lealea.tistory.com/293
  */
 public class MakeTwoQueuesEqual {
     public int solution(int[] queue1, int[] queue2){

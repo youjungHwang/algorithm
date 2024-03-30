@@ -5,7 +5,8 @@ package com.algorithm.problemsolving.java.leetcode;
  * Input: nums = [1,2,3,4]
  * Output: [24,12,8,6]
  *
- * https://lealea.tistory.com/306
+ * 문제: https://leetcode.com/problems/product-of-array-except-self/description/
+ * 해설: https://lealea.tistory.com/306
  */
 public class ProductOfArrayExceptSelf {
     public int[] productExceptSelf(int[] nums) {

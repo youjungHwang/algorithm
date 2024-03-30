@@ -5,7 +5,8 @@ package com.algorithm.problemsolving.java.leetcode;
  * Input: prices = [7,1,5,3,6,4]
  * Output: 5
  *
- * https://lealea.tistory.com/307
+ * 문제: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+ * 해설: https://lealea.tistory.com/307
  */
 public class BestTimeToBuyAndSellStock {
     public int maxProfit(int[] prices) {

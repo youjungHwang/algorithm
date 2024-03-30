@@ -4,7 +4,9 @@ import java.util.*;
 
 /**
  * 561. Array Partition
- * https://lealea.tistory.com/305
+ *
+ * 문제: https://leetcode.com/problems/array-partition/description/
+ * 해설: https://lealea.tistory.com/305
  */
 class ArrayPartition {
     public int arrayPairSum(int[] nums) {
