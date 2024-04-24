@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  * 출력 예시:
  * M을 넘지 않으면서 M에 최대한 가까운 카드 3장의 합을 출력: 21
  */
-public class blackjack {
+public class Blackjack {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
