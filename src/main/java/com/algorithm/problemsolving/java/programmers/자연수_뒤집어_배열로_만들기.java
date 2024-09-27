@@ -1,8 +1,5 @@
 package com.algorithm.problemsolving.java.programmers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * [문자열] 코딩테스트 연습 > 연습문제 > 자연수 뒤집어 배열로 만들기
  *
@@ -10,25 +7,20 @@ import java.util.Collections;
  */
 public class 자연수_뒤집어_배열로_만들기 {
     public int[] solution(long n) {
-        // 인덱싱을 쉽게 하기 위해 문자열로 변환
+        // substring으로 문자열 조작을 위해 long -> String
         String str = String.valueOf(n);
 
+        // "12345" -> [1,2,3,4,5]
+        int[] arr = new int[str.length()];
+        for(int i=0; i<str.length(); i++){
+            arr[i] = Integer.parseInt(str.substring(i, i+1));
+        }
+
+        // 배열을 하나 더 만들어서 거꾸로 삽입
         int[] answer = new int[str.length()];
-        ArrayList<Integer> arrList = new ArrayList<>();
-
         for(int i=0; i<str.length(); i++){
-            arrList.add(Integer.parseInt(str.substring(i, i+1)));
+            answer[i] =  arr[str.length() - 1 - i];
         }
-
-        // 뒤집기
-        Collections.reverse(arrList);
-
-        // ArrayList -> int[] 배열로 변환
-        for(int i=0; i<str.length(); i++){
-            // 배열은 인덱스로 넣음
-            answer[i] = arrList.get(i);
-        }
-
         return answer;
     }
 }
