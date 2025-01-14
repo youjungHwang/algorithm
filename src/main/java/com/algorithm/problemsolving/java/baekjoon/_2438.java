@@ -13,17 +13,11 @@ public class _2438 {
 
         for(int i=1; i<=n; i++) {
             // 별을 i개 출력한다
-            printStar(i);
+            StringBuilder sb = new StringBuilder();
+            for(int j=1; j<=i; j++) {
+                sb.append("*");
+            }
+            System.out.println(sb);
         }
-    }
-
-    // nums 개수만큼 별을 출력하는 메서드
-    // n = 3 -> ***
-    private static void printStar(int nums) {
-        StringBuilder sb = new StringBuilder();
-        for(int i=1; i<=nums; i++) {
-            sb.append("*");
-        }
-        System.out.println(sb);
     }
 }
