@@ -49,30 +49,24 @@ public class Main {
     public static void main(String[] args) throws IOException {
         input();
 
-        // 문자 하나씩 비교하기 위해 문자열 -> 문자 배열
-        char[] firstChar = first.toCharArray();
-        char[] secondChar = second.toCharArray();
+        int[] a = new int[26];
+        int[] b = new int[26];
 
-        for(int i=0; i<firstChar.length; i++) {
-            for(int j=0; j<secondChar.length; j++) {
-                if(firstChar[i] == secondChar[j]) {
-                    // 치환
-                    secondChar[j] = '.';
-                    firstChar[i] = '.';
-                }
-            }
+        // 주어진 문자열을 돌면서 해당 문자의 개수를 카운트한다
+        for(int i=0; i<first.length(); i++) {
+            a[first.charAt(i) - 'a'] ++;
         }
 
-        // '.'을 제외하고 count하여 반환
-        for(int i=0; i<firstChar.length; i++) {
-            if(!(firstChar[i] == '.')) {
-                count++;
-            }
+        for(int i=0; i<second.length(); i++) {
+            b[second.charAt(i) - 'a'] ++;
         }
 
-        for(int j=0; j<secondChar.length; j++) {
-            if(!(secondChar[j] == '.')) {
-                count++;
+        // 비교하면서 개수가 다르면 count++
+        for(int i=0; i<26; i++) {
+            if(a[i] > b[i]) {
+                count += (a[i] - b[i]);
+            }else if(a[i] < b[i]) {
+                count += (b[i] - a[i]);
             }
         }
 
