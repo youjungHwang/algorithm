@@ -2,19 +2,30 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    static FastReader scan = new FastReader();
+    static PrintWriter out = new PrintWriter(System.out);
+
+    public static void main(String[] args) {
+
+
+        // 자원 해제
+        scan.close();
+        out.close();
+    }
+
     static class FastReader {
-        private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        private StringTokenizer st;
+        private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        private StringTokenizer tokenizer;
 
         String nextString() {
-            while (st == null || !st.hasMoreElements()) {
+            while (tokenizer == null || !tokenizer.hasMoreElements()) {
                 try {
-                    st = new StringTokenizer(br.readLine());
+                    tokenizer = new StringTokenizer(reader.readLine());
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
-            return st.nextToken();
+            return tokenizer.nextToken();
         }
 
         int nextInt() {
@@ -28,21 +39,19 @@ public class Main {
         String nextLine() {
             String str = "";
             try {
-                str = br.readLine();
+                str = reader.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             return str;
         }
-    }
 
-    static void input() throws IOException {
-        FastReader scan = new FastReader();
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        input();
-
+        void close() {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
