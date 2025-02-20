@@ -1,52 +1,120 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static int[] dx = {-2, -2, -1, -1, 1, 1, 2, 2};
-    static int[] dy = {-1, 1, -2, 2, -2, 2, -1, 1};
+    static FastReader scan = new FastReader();
+    static PrintWriter out = new PrintWriter(System.out);
+
+    // 이동 방향
+    static int[] dr = {-2, -1, 1, 2, -2, -1, 1, 2};
+    static int[] dc = {1, 2, 2, 1, -1 ,-2, -2, -1};
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt(); // 테스트 케이스의 수
+        int t = scan.nextInt();
 
-        for (int t = 0; t < T; t++) {
-            int I = sc.nextInt(); // 체스판의 크기
-            boolean[][] visited = new boolean[I][I];
-            int startX = sc.nextInt();
-            int startY = sc.nextInt();
-            int endX = sc.nextInt();
-            int endY = sc.nextInt();
+        for(int i=0; i<t; i++) {
+            int n = scan.nextInt();
+            String[] curr = scan.nextLine().split(" ");
+            int cx = Integer.parseInt(curr[0]);
+            int cy = Integer.parseInt(curr[1]);
 
-            System.out.println(bfs(I, startX, startY, endX, endY, visited));
+            String[] target = scan.nextLine().split(" ");
+            int tx = Integer.parseInt(target[0]);
+            int ty = Integer.parseInt(target[1]);
+
+            int[][] map = new int[n][n];
+            boolean[][] visited = new boolean[n][n];
+
+           int min = shortestDist(map, cx, cy, tx, ty, visited, n);
+           out.println(min);
         }
+
+        // 자원 해제
+        scan.close();
+        out.close();
     }
 
-    static int bfs(int I, int startX, int startY, int endX, int endY, boolean[][] visited) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{startX, startY, 0});
-        visited[startX][startY] = true;
+    // bfs
+    private static int shortestDist(int[][]map, int cx, int cy, int tx, int ty,
+                                    boolean[][] visited, int n) {
+        // 큐
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{cx, cy, 0});
+        visited[cx][cy] = true;
 
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int x = current[0];
-            int y = current[1];
-            int count = current[2];
+        while(!q.isEmpty()) {
+            // 큐에서 원소 뽑기
+            int[] curr = q.poll();
+            int currX = curr[0];
+            int currY = curr[1];
+            int count = curr[2];
 
-            if (x == endX && y == endY) {
+            // 종료 조건
+            if(currX == tx && currY == ty) {
                 return count;
             }
 
-            for (int i = 0; i < 8; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+            // 8방향으로 돌면서 확인
+            for(int i=0; i<8; i++) {
+                int nextX = currX + dr[i];
+                int nextY = currY + dc[i];
 
-                if (nx >= 0 && ny >= 0 && nx < I && ny < I && !visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    queue.add(new int[]{nx, ny, count + 1});
+                if(isRange(nextX, nextY, n) && !visited[nextX][nextY]) {
+                    visited[nextX][nextY] = true;
+                    q.add(new int[]{nextX, nextY, count +1});
                 }
             }
         }
-        return -1; // 이론상으로는 여기에 도달하지 않음
+        // 여기까지 올 일 없음
+        return -1;
+    }
+
+    // 범위 확인
+    private static boolean isRange(int nextX, int nextY, int n) {
+        return 0 <= nextX && nextX < n && 0 <= nextY && nextY < n;
+    }
+
+    static class FastReader {
+        private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        private StringTokenizer tokenizer;
+
+        String nextString() {
+            while (tokenizer == null || !tokenizer.hasMoreElements()) {
+                try {
+                    tokenizer = new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(nextString());
+        }
+
+        long nextLong() {
+            return Long.parseLong(nextString());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+
+        void close() {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
+
+
