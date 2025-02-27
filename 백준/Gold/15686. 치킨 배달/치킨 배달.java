@@ -7,6 +7,7 @@ public class Main {
 
     static int n;
     static int m;
+    static int[][] map;
     static List<int[]> house;
     static List<int[]> chicken;
     static boolean[] visited;
@@ -14,21 +15,25 @@ public class Main {
     public static void main(String[] args) {
         String[] info = scan.nextLine().split(" ");
         n = Integer.parseInt(info[0]);
+        // 살아남을 치킨집 수
         m = Integer.parseInt(info[1]);
 
         house = new ArrayList<>();
         chicken = new ArrayList<>();
 
-        // 지도 입력 받기
-        for (int i = 1; i <= n; i++) {
+        map = new int[n+1][n+1];
+        for(int i=1; i<=n; i++) {
+
             String[] lineInfo = scan.nextLine().split(" ");
-            for (int j = 1; j <= n; j++) {
-                int value = Integer.parseInt(lineInfo[j - 1]);
-                if (value == 2) {
-                    chicken.add(new int[]{i, j});  // 치킨집
+            for(int j=1; j<=n; j++) {
+                map[i][j] = Integer.parseInt(lineInfo[j-1]);
+
+                if(map[i][j] == 2) {
+                    chicken.add(new int[]{i,j});
                 }
-                if (value == 1) {
-                    house.add(new int[]{i, j});  // 집
+
+                if(map[i][j] == 1) {
+                    house.add(new int[]{i,j});
                 }
             }
         }
@@ -36,11 +41,12 @@ public class Main {
         // 치킨집 수 만큼 방문 배열 초기화
         visited = new boolean[chicken.size()];
         int answer = Integer.MAX_VALUE;
-
-        // 백트래킹으로 최적의 치킨집 조합을 찾음
         answer = dfs(0, 0, answer);
 
-        out.println(answer);  // 최종 결과 출력
+        out.println(answer);
+
+        // 자원 해제
+        scan.close();
         out.close();
     }
 
@@ -49,37 +55,34 @@ public class Main {
         if (depth == m) {
             int result = 0;
 
-            // 집마다 최소 거리 계산
             for (int[] h : house) {
                 int hx = h[0];
                 int hy = h[1];
 
                 int min = Integer.MAX_VALUE;
-                // 선택된 치킨집만 계산
                 for (int i = 0; i < chicken.size(); i++) {
-                    if (visited[i]) {
+                    if (visited[i]) {// 선택된 치킨집만 계산
                         int cx = chicken.get(i)[0];
                         int cy = chicken.get(i)[1];
                         int cal = Math.abs(cx - hx) + Math.abs(cy - hy);
-                        min = Math.min(min, cal);  // 최소 거리로 갱신
+                        min = Math.min(min, cal);
                     }
                 }
-                result += min;  // 각 집의 최소 거리 합산
+                result += min;
             }
-
-            return Math.min(answer, result);  // 최소값을 계속 갱신
+            // 최소 값을 계속 갱신
+            return Math.min(answer, result);
         }
 
-        // 치킨집 선택
-        for (int i = start; i < chicken.size(); i++) {
-            if (!visited[i]) {
+        // 조합으로 모든 치킨 집 확인
+        for(int i=start; i<chicken.size(); i++) {
+            if(!visited[i]) {
                 visited[i] = true;
-                answer = dfs(i + 1, depth + 1, answer);  // 조합 탐색
+                answer = dfs(i + 1, depth + 1, answer);
                 visited[i] = false;
-            }
+           }
         }
-
-        return answer;  // 최종적으로 계산된 최소 거리 반환
+        return answer;
     }
 
     static class FastReader {
@@ -124,3 +127,5 @@ public class Main {
         }
     }
 }
+
+
