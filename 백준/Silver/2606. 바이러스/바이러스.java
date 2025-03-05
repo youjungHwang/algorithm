@@ -1,53 +1,101 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    // 그래프
-    private static List<List<Integer>> graph;
+    static FastReader scan = new FastReader();
+    static PrintWriter out = new PrintWriter(System.out);
 
-    // 방문 확인
-    private static boolean[] visited;
+    static int n;
+    static Map<Integer, List<Integer>> graph = new HashMap<>();
+    static boolean[] visited;
+    static int result;
 
-    // 바이러스 걸린 컴퓨터 수
-    private static int count;
-
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
+    public static void main(String[] args) {
+        // dfs
+        n = scan.nextInt();
+        int m = scan.nextInt();
 
         // 그래프 초기화
-        graph = new ArrayList<>(n+1);
-        for(int i=0; i<=n; i++) {
-            graph.add(new ArrayList<>());
+        for(int i=1; i<=n; i++) {
+            graph.put(i, new ArrayList<>());
         }
 
-        for(int i=1; i<=m; i++) {
-            String[] info = br.readLine().split(" ");
-            int x = Integer.parseInt(info[0]);
-            int y = Integer.parseInt(info[1]);
+        for(int i=0; i<m; i++) {
+            String[] info = scan.nextLine().split(" ");
+            int start = Integer.parseInt(info[0]);
+            int end = Integer.parseInt(info[1]);
 
-            graph.get(x).add(y);
-            graph.get(y).add(x);
+            // 그래프 양방향 연결
+            graph.get(start).add(end);
+            graph.get(end).add(start);
         }
 
-        // 방문 확인 배열 초기화
+        // 방문 배열 초기화
         visited = new boolean[n+1];
+        dfs(1);
 
-        findVirusCount(1);
+        out.print(result);
 
-        System.out.print(count);
+        // 자원 해제
+        scan.close();
+        out.close();
     }
 
-    private static void findVirusCount(int node) {
+    // dfs
+    private static void dfs(int s) {
         // 방문 확인
-        visited[node] = true; 
+        visited[s] = true;
 
-        for(int near : graph.get(node)) { 
+        // 연결된 노드 확인
+        for(int near : graph.get(s)) {
             if(!visited[near]) {
-                count++; 
-                findVirusCount(near);
+                result ++;
+                dfs(near);
+            }
+        }
+    }
+
+    static class FastReader {
+        private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        private StringTokenizer tokenizer;
+
+        String nextString() {
+            while (tokenizer == null || !tokenizer.hasMoreElements()) {
+                try {
+                    tokenizer = new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(nextString());
+        }
+
+        long nextLong() {
+            return Long.parseLong(nextString());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+
+        void close() {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 }
+
+
