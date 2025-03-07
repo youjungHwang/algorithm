@@ -6,14 +6,13 @@ public class Main {
     static PrintWriter out = new PrintWriter(System.out);
 
     public static void main(String[] args) {
+        // 스택 - 괄호
         while(true) {
-            char[] sentence = scan.nextLine().toCharArray();
+            // 띄어쓰기 없는 한 줄로 입력 받음
+            String line = scan.nextLine();
+            if(line.equals(".")) break;
 
-            if(sentence[0] == '.') break;
-
-            String result = isBalancedWorld(sentence);
-
-            System.out.println(result);
+            out.println(checkStack(line));
         }
 
         // 자원 해제
@@ -21,22 +20,21 @@ public class Main {
         out.close();
     }
 
-    private static String isBalancedWorld(char[] sentence) {
-
+    private static String checkStack(String line) {
         Deque<Character> s = new ArrayDeque<>();
 
-        for(int i=0; i<sentence.length; i++) {
-            if(sentence[i] == '(') {
-                s.addFirst('(');
-            }
-
-            if(sentence[i] == '[') {
-                s.addFirst('[');
-            }
-
-            if(sentence[i] == ')' || sentence[i] == ']' ) {
-                if(s.isEmpty() || (sentence[i] == ')' && s.peek() != '(') ||
-                        (sentence[i] == ']' && s.peek() != '[') ) {
+        // String -> char[]
+        for(char c : line.toCharArray()) {
+            if(c == '(' || c == '[') {
+                s.push(c);
+            }else if(c == ')') {
+                if(s.isEmpty() || s.peek() != '(') {
+                    return "no";
+                }else {
+                    s.pop();
+                }
+            }else if(c == ']') {
+                if(s.isEmpty() || s.peek() != '[') {
                     return "no";
                 }else {
                     s.pop();
@@ -93,3 +91,5 @@ public class Main {
         }
     }
 }
+
+
