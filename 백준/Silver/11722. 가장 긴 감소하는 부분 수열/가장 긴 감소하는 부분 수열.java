@@ -10,37 +10,36 @@ public class Main {
     static int[] dp;
 
     public static void main(String[] args) {
-        // dp[i] = i번째까지 가장 긴 감소하는 수열의 길이
-        // 투 포인터로 배열 이동
-        // i < j -> dp[i] = dp[j]+1 (단, 기존 dp[i]보다 작으면 무시)
-
+        // dp[i] = i 번째까지의 가장 긴 감소하는 부분 수열
         n = scan.nextInt();
 
+        // 배열 초기화
         arr = new int[n];
-        String[] info = scan.nextLine().split(" ");
-        for(int i=0; i<n; i++) {
-            int num = Integer.parseInt(info[i]);
-            arr[i] = num;
-        }
-
         dp = new int[n];
-        // 가장 작아도 자기 자신은 포함하므로, 1로 초기화
+
+        // dp 초기값 1로 설정
         Arrays.fill(dp, 1);
 
-        int max = moveDpArr();
-        out.print(max);
+        String[] info = scan.nextLine().split(" ");
+        for(int i=0; i<n; i++) {
+            arr[i] = Integer.parseInt(info[i]);
+        }
+
+        int result = findMaxLength();
+        out.print(result);
 
         // 자원 해제
         scan.close();
         out.close();
     }
 
-    private static int moveDpArr() {
+    private static int findMaxLength() {
         int max = 1;
 
-        for(int i=0; i<n; i++) { // 확인하려는 포인터
-            for(int j=0; j<i; j++) { // 비교하는 포인터
-                // i < j -> dp[i] = dp[j]+1 (단, 기존 dp[i]보다 작으면 무시)
+        // i : 이동하는 포인터
+        // j : i와 비교하는 포인터
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<i; j++) {
                 if(arr[i] < arr[j]) {
                     if(dp[i] < dp[j] + 1) {
                         dp[i] = dp[j] + 1;
@@ -49,6 +48,7 @@ public class Main {
                 }
             }
         }
+
         return max;
     }
 
@@ -94,3 +94,5 @@ public class Main {
         }
     }
 }
+
+
