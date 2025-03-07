@@ -1,15 +1,13 @@
- import java.io.*;
+import java.io.*;
 import java.util.*;
 
 public class Main {
     static FastReader scan = new FastReader();
     static PrintWriter out = new PrintWriter(System.out);
 
+    static int[] dp;
     static int n;
     static int k;
-    static int w;
-    static int v;
-    static int[] dp;
 
     public static void main(String[] args) {
         // dp[k] = 무게를 k까지 담았을 때 최대 가치(v)
@@ -17,14 +15,15 @@ public class Main {
         n = Integer.parseInt(info[0]);
         k = Integer.parseInt(info[1]);
 
+        // dp 초기화
         dp = new int[k+1];
 
         for(int i=0; i<n; i++) {
-            String[] bag = scan.nextLine().split(" ");
-            w = Integer.parseInt(bag[0]);
-            v = Integer.parseInt(bag[1]);
+            String[] bagInfo = scan.nextLine().split(" ");
+            int w = Integer.parseInt(bagInfo[0]);
+            int v = Integer.parseInt(bagInfo[1]);
 
-            // 이미 구한 무게(j)가 있고, 무게(j-w)와 비교
+            // 이미 구한 dp[j]와 dp[j-w]의 가치를 비교해 갱신
             for(int j=k; j>=w; j--) {
                 if(dp[j] < dp[j-w] + v) {
                     dp[j] = dp[j-w] + v;
@@ -80,3 +79,5 @@ public class Main {
         }
     }
 }
+
+
