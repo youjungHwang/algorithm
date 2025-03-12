@@ -15,7 +15,7 @@ public class Main {
         for(int i=0; i<L; i++) {
             String identityNumber = scan.nextString();
 
-            if(waitRoom.contains(identityNumber)) waitRoom.remove(identityNumber);
+            waitRoom.remove(identityNumber);
             waitRoom.add(identityNumber);
         }
 
